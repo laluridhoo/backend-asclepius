@@ -47,8 +47,6 @@ async function postPredictHandler(request, h) {
   }
 }
 
-
-
 // Handler untuk GET /predict/histories
 async function getHistoriesHandler(request, h) {
   try {
