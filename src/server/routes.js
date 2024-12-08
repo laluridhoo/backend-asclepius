@@ -1,5 +1,5 @@
 const postPredictHandler = require('../server/handler');
- 
+const getHistoriesHandler = require('../server/handler');  
 const routes = [
   {
     path: '/predict',
@@ -12,7 +12,12 @@ const routes = [
         maxBytes: 1000000, // 1MB
       }
     }
-  }
+  },
+  {
+   path: '/predict/histories', // Endpoint baru
+    method: 'GET',
+    handler: getHistoriesHandler, // Gunakan handler baru
+  },
 ]
  
 module.exports = routes;
