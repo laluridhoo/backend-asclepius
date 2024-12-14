@@ -1,6 +1,7 @@
 const predictClassification = require('../services/inferenceService');
 const storeData = require('../services/storeData');
 const crypto = require('crypto');
+const { Firestore } = require('@google-cloud/firestore');
 
 async function postPredictHandler(request, h) {
   try {
@@ -50,13 +51,13 @@ async function postPredictHandler(request, h) {
 // Handler untuk GET /predict/histories
 async function getHistoriesHandler(request, h) {
   try {
-    const db = new Firestore();
+    const db = new Firestore({
+      keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    });
     const predictCollection = db.collection('prediction');
 
-    // Ambil semua dokumen dalam koleksi
     const snapshot = await predictCollection.get();
 
-    // Jika tidak ada data
     if (snapshot.empty) {
       return h.response({
         status: 'success',
@@ -64,7 +65,6 @@ async function getHistoriesHandler(request, h) {
       }).code(200);
     }
 
-    // Map data ke dalam array
     const histories = [];
     snapshot.forEach((doc) => {
       histories.push({
@@ -82,14 +82,13 @@ async function getHistoriesHandler(request, h) {
 
     return h.response({
       status: 'fail',
-      message: 'Failed to fetch prediction histories',
+      message: 'Gagal mengambil riwayat prediksi',
     }).code(500);
   }
 }
 
-
-
-
-
-
-module.exports = postPredictHandler, getHistoriesHandler;
+// Perbaiki ekspor multiple handler
+module.exports = {
+  postPredictHandler,
+  getHistoriesHandler
+};
