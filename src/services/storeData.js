@@ -6,7 +6,7 @@ const db = new Firestore({
 
 async function storeData(id, data) {
   try {
-    const predictCollection = db.collection('prediction');
+    const predictCollection = db.collection('predictions');
 
     // Simpan data ke Firestore
     await predictCollection.doc(id).set(data);

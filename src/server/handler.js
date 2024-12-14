@@ -30,7 +30,7 @@ async function postPredictHandler(request, h) {
     const response = h.response({
       status: 'success',
       message: confidenceScore > 99
-        ? 'Model is predicted successfully.'
+        ? 'Model is predicted successfully'
         : 'Model is predicted successfully but under threshold. Please use the correct picture',
       data,
     });
@@ -43,7 +43,7 @@ async function postPredictHandler(request, h) {
       status: 'fail',
       message: 'Terjadi kesalahan dalam menyimpan data atau melakukan prediksi',
     });
-    response.code(500);
+    response.code(400);
     return response;
   }
 }
@@ -83,7 +83,7 @@ async function getHistoriesHandler(request, h) {
     return h.response({
       status: 'fail',
       message: 'Gagal mengambil riwayat prediksi',
-    }).code(500);
+    }).code(400);
   }
 }
 
